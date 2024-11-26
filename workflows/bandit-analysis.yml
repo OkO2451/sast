@@ -1,0 +1,25 @@
+name: Bandit SAST Analysis
+
+on: [push, pull_request]
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit
+        run: bandit -r . -f json -o bandit-output.json
+
+      - name: Upload Bandit Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: bandit-report
+          path: bandit-output.json
