@@ -10,7 +10,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'  # Specify the Python version you need
 
       - name: Install Bandit
         run: pip install bandit
@@ -19,7 +22,7 @@ jobs:
         run: bandit -r . -f json -o bandit-output.json
 
       - name: Upload Bandit Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: bandit-report
           path: bandit-output.json
